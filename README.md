@@ -18,3 +18,7 @@ See this link for a full write-up with example:
    [http://dashdrum.com/blog/2012/12/more-relatedfieldwidgetwrapper-the-popup/ ](http://dashdrum.com/blog/2012/12/more-relatedfieldwidgetwrapper-the-popup/ )
    
 
+### SelectDisabled
+
+Adds the ability to disable selected options of a Select control
+
