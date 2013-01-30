@@ -22,4 +22,4 @@ See this link for a full write-up with example:
 
 Adds the ability to disable selected options of a Select control
 
-Tyring an edit on the github server
+
