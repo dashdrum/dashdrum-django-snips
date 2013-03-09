@@ -26,7 +26,7 @@ class NoAsteriskTextErrorList(ErrorList):
 
 from django.core.exceptions import ImproperlyConfigured
     
-class CustomErrorClassMixin(object):
+class CustomErrorClassFormMixin(object):
     ''' Allows the declaration of a custom error_class for a form
     
         Requires the error_class attribute to be provided 
@@ -35,7 +35,7 @@ class CustomErrorClassMixin(object):
 
             forms.py:
     
-            class MyFormName(CustomErrorClassMixin, ModelForm)
+            class MyFormName(CustomErrorClassFormMixin, ModelForm)
     
                 error_class = MyCustomErrorListClass
     
@@ -47,14 +47,14 @@ class CustomErrorClassMixin(object):
         # Make sure that the error_class attribute is set on the
         # form, or raise a configuration error.
         if self.error_class is None:
-            raise ImproperlyConfigured("'CustomErrorClassMixin' requires "
+            raise ImproperlyConfigured("'CustomErrorClassFormMixin' requires "
                 "'error_class' attribute to be set.")
             
         ## Set the error_class attribute
         kwargs['error_class'] = self.error_class
         
         ## Call the parent method
-        super(CustomErrorClassMixin, self).__init__(*args, **kwargs)
+        super(CustomErrorClassFormMixin, self).__init__(*args, **kwargs)
     
 ##---------------------------------------------------------------------------##
         

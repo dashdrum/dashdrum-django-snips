@@ -24,7 +24,7 @@ Adds the ability to disable selected options of a Select control
 
 ## forms.py
 
-### CustomErrorClassMixin
+### CustomErrorClassFormMixin
 
 This little mixin provides an easy way to declare a custom ErrorClass for a form
 
@@ -32,11 +32,12 @@ Usage:
 
 	in forms.py:
 	
-	class MyFormName(CustomErrorClassMixin, ModelForm)
+	class MyFormName(CustomErrorClassFormMixin, ModelForm)
 	
 		error_class = MyCustomErrorListClass
 	
 Notes:
+
 * The mixin must be declared before the form class in order to update the error_class in kwargs before the form's __init__() method fires
 * The `error_class` attribute must be defined
 
@@ -52,6 +53,22 @@ Usage:
 	
 	form = MyFormName(data=form_data, error_class=NoAsteriskTextErrorList)
 	
-Or try the CustomErrorClassMixin
-	
+Or try the CustomErrorClassFormMixin or CustomErrorClassViewMixin
 
+## views.py
+
+### CustomErrorClassViewMixin
+
+When used with a class based view descendent from FormMixin, this will include the custom error_class
+value in the `get_form_kwargs` method.
+
+    Usage:
+
+        views.py:
+
+        class MyViewName(CustomErrorClassViewMixin, [a FormMixin descendant, such as CreateView])
+
+            error_class = MyCustomErrorListClass
+	
+Note:
+* The `error_class` attribute must be defined
