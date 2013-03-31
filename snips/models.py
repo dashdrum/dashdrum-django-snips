@@ -2,6 +2,7 @@
 
 from django.db import models
 from datetime import datetime 
+from django.utils.translation import ugettext_lazy as _
 
 
 class ModelBase(models.Model):
