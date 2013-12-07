@@ -7,20 +7,28 @@ A collection of code snippets that I use in my Django apps
 
 Before I get much documentation here, I need to get my house in order - meaning I need to organize the code.  Watch this space for descriptions of each reusable snippet as I work through the list.
 
-## widgets.py
+## fields.py
 
-### CustomRelatedFieldWidgetWrapper
+### Empty Choice Field
 
-Based on RelatedFieldWidgetWrapper, this version does the same thing outside of the admin interface.
+Extends Django's ChoiceField to provide an empty label similar to a ModelChoiceField
 
+1 The empty_label parameter defaults to u"---------", but can be overridden
+2 A required field has the empty field choice prepended to the list, unless an initial value is provided.
+3 When the field is not required, the empty field choice is always included, regardless of whether an initial value exists
+
+Based on [https://gist.github.com/davidbgk/651080](https://gist.github.com/davidbgk/651080)
+
+Usage:
+
+    in forms.py:
+    
+    class MyFormName(Form):
+        
+        suitability = EmptyChoiceField(required=False,choices=Suitability)
+        
 See this link for a full write-up with example:
-
-   [http://dashdrum.com/blog/2012/12/more-relatedfieldwidgetwrapper-the-popup/ ](http://dashdrum.com/blog/2012/12/more-relatedfieldwidgetwrapper-the-popup/ )
-   
-
-### SelectDisabled
-
-Adds the ability to disable selected options of a Select control
+    [http://dashdrum.com/blog/2013/02/django-emptychoicefield/](http://dashdrum.com/blog/2013/02/django-emptychoicefield/)
 
 ## forms.py
 
@@ -72,3 +80,19 @@ value in the `get_form_kwargs` method.
 	
 Note:
 * The `error_class` attribute must be defined
+
+## widgets.py
+
+### CustomRelatedFieldWidgetWrapper
+
+Based on RelatedFieldWidgetWrapper, this version does the same thing outside of the admin interface.
+
+See this link for a full write-up with example:
+
+   [http://dashdrum.com/blog/2012/12/more-relatedfieldwidgetwrapper-the-popup/ ](http://dashdrum.com/blog/2012/12/more-relatedfieldwidgetwrapper-the-popup/ )
+   
+
+### SelectDisabled
+
+Adds the ability to disable selected options of a Select control
+
