@@ -36,8 +36,6 @@ def truncate_to_space(orig,max):
     >>> truncate_to_space('x zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',50)
     'x'
     
-    >>> truncate_to_space('What is Translational Research? The Purdue University-Indiana University Partnership that built the Indiana Clinical and Translational Sciences Institute',50)
-    'What is Translational Research? The Purdue'
     
     """
 

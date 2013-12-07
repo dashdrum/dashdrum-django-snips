@@ -3,10 +3,6 @@ dashdrum-django-snips
 
 A collection of code snippets that I use in my Django apps
 
-# Just starting out
-
-Before I get much documentation here, I need to get my house in order - meaning I need to organize the code.  Watch this space for descriptions of each reusable snippet as I work through the list.
-
 ## fields.py
 
 ### Empty Choice Field
@@ -47,7 +43,8 @@ Usage:
 Notes:
 
 * The mixin must be declared before the form class in order to update the error_class in kwargs before the form's __init__() method fires
-* The `error_class` attribute must be defined
+* The `error_class` attribute must be defined 
+* See NoAsteriskTextErrorList as an example of a custom ErrorList
 
 
 ### NoAsteriskTextErrorList
@@ -62,6 +59,77 @@ Usage:
 	form = MyFormName(data=form_data, error_class=NoAsteriskTextErrorList)
 	
 Or try the CustomErrorClassFormMixin or CustomErrorClassViewMixin
+
+## models.py
+
+### ModelBase
+
+ModelBase extends the Model class and provides a couple of features I like to see in all of my models.
+
+1 The fields `created_on` and `updated_on` keep track of when the object is created or modified
+2 The `allow_delete` property can be overridden for each model to indicate when a delete is safe. Helps avoid accidental cascading deletes.
+
+Usage:
+
+    in models.py
+    
+    class MyModel(ModelBase):
+        # define fields - created_on and updated_on are already defined
+        
+        @property
+        def allow_delete(self):
+        	if # some condition #:
+        		return False
+        	return True
+        	
+An example of a condition that could be used in the `allow_delete` function would be to check to see if there are any linked objects.
+
+    if len(MyModel.objects.get(id=self.id).anothermodel_set.all()) == 0:  ## Check for linked objects
+        return False  ## objects are linked
+    return True ## OK to delete
+
+## utils.py
+
+### truncate_to_space(orig,max)
+
+Truncates the given string to the desired length at the nearest available space.
+
+Usage:
+
+    short_name = truncate_to_space(full_name,10)
+    
+### is_valid_email(email)
+
+Uses the Django provided regular expression to validate an email address.
+
+Usage:
+
+    if is_valid_email(email_field):
+    	send_email(email_field)
+
+### Choice
+
+From [http://tomforb.es/using-python-metaclasses-to-make-awesome-django-model-field-choices?pid=0](http://tomforb.es/using-python-metaclasses-to-make-awesome-django-model-field-choices?pid=0)
+
+A metaclass that makes for simple ModelField choices
+
+Usage:
+
+    in models.py (or wherever you wish):
+    
+    class ActionType(Choice):
+        AWAITING_APPROVAL = 'E'
+        APPROVED = 'A'
+        REJECTED = 'R'
+        IN_PROCESS = 'I'
+        TO_COMMITTEE = 'C'
+        NEEDS_RESEARCH = 'N'
+        
+    in forms.py:
+    
+    class MyFormName(Form):
+        
+        action_type = ChoiceField(required=False,choices=ActionType)	    
 
 ## views.py
 
@@ -80,6 +148,7 @@ value in the `get_form_kwargs` method.
 	
 Note:
 * The `error_class` attribute must be defined
+* See NoAsteriskTextErrorList as an example of a custom ErrorList
 
 ## widgets.py
 
@@ -94,5 +163,28 @@ See this link for a full write-up with example:
 
 ### SelectDisabled
 
-Adds the ability to disable selected options of a Select control
+Adds the ability to disable selected choices of a Select control
+        
+Usage:
+        
+    in forms.py:
+        
+    class MyForm(Form): 
+        def __init__(self, disabled, *args, **kwargs):
+            super(MyForm, self).__init__(*args, **kwargs)
+            if disabled:
+                self.fields['my_field'].widget.disabled = disabled
+                    
+        my_field = ModelChoiceField(widget=SelectDisabled(),queryset=MyModel.objects.all(),empty_label=None)  
+            
+    in views.py:
+        
+        ## Set a condition in the filter clause of the query to return 
+        ## the disabled items
+        
+        disabled = []
+        for m in MyModel.objects.filter(##condition##).values_list('id'):
+            disabled.append(m[0])
+                
+        form = MyForm( data=request.POST or None, disabled=disabled)
 
