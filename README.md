@@ -9,9 +9,9 @@ A collection of code snippets that I use in my Django apps
 
 Extends Django's ChoiceField to provide an empty label similar to a ModelChoiceField
 
-1 The empty_label parameter defaults to u"---------", but can be overridden
-2 A required field has the empty field choice prepended to the list, unless an initial value is provided.
-3 When the field is not required, the empty field choice is always included, regardless of whether an initial value exists
+* The empty_label parameter defaults to u"---------", but can be overridden
+* A required field has the empty field choice prepended to the list, unless an initial value is provided.
+* When the field is not required, the empty field choice is always included, regardless of whether an initial value exists
 
 Based on [https://gist.github.com/davidbgk/651080](https://gist.github.com/davidbgk/651080)
 
@@ -66,8 +66,8 @@ Or try the CustomErrorClassFormMixin or CustomErrorClassViewMixin
 
 ModelBase extends the Model class and provides a couple of features I like to see in all of my models.
 
-1 The fields `created_on` and `updated_on` keep track of when the object is created or modified
-2 The `allow_delete` property can be overridden for each model to indicate when a delete is safe. Helps avoid accidental cascading deletes.
+* The fields `created_on` and `updated_on` keep track of when the object is created or modified
+* The `allow_delete` property can be overridden for each model to indicate when a delete is safe. Helps avoid accidental cascading deletes.
 
 Usage:
 
