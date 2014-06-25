@@ -52,10 +52,10 @@ def truncate_to_space(orig,max):
 #
 
 ## Validate email address
-from django.core.validators import email_re
+from django.core.validators import validate_email
 
 def is_valid_email(email):
-    return True if email_re.match(email) else False
+    return True if validate_email(email) else False
 
 #-----------------------------------------------------------------------------#
 #  Choice metaclass from http://tomforb.es/using-python-metaclasses-to-make-awesome-django-model-field-choices?pid=0
