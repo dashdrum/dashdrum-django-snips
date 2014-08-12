@@ -150,6 +150,25 @@ Note:
 * The `error_class` attribute must be defined
 * See NoAsteriskTextErrorList as an example of a custom ErrorList
 
+### FormsetMixin, FormsetCreateMixin, FormsetUpdateMixin
+
+Set of mixins to add formset processing to class based views
+
+FormsetMixin is the parent class that provides most of the functionality. However, the get() and post() methods need to be subclassed to provide a value for self.object.
+
+FormsetCreateMixin and FormsetUpdateMixin both handle the assignment of self.object as is appropriate for their function.
+
+Usage:
+  
+Use FormsetCreateMixin and FormsetUpdateMixin along with the corresponding class-based view.  Also, the instance variable detail\_form\_class should be defined.
+
+Example:
+
+    class MyView(FormsetCreateMixin, CreateView):
+        model = MyModel
+        form_class = MyModelForm
+        detail_form_class = MyFormest
+    
 ## widgets.py
 
 ### CustomRelatedFieldWidgetWrapper
