@@ -51,8 +51,8 @@ from django.core.urlresolvers import reverse
 from snips.fields import EmptyChoiceField
 from snips.forms import CustomErrorClassFormMixin, NoAsteriskTextErrorList
 
-from factories import AuthorFactory
-from models import Author
+from .factories import AuthorFactory
+from .models import Author
     
 ##---------------------------------------------------------------------------##
 ## Test EmptyChoiceField

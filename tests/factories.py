@@ -4,7 +4,7 @@ import string
 
 import factory
 
-from models  import Author
+from .models  import Author
 
 
 def random_string(length=10):

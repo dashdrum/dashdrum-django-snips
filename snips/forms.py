@@ -8,7 +8,10 @@ forms.py
 
 ##---------------------------------------------------------------------------##
 
-from django.utils.encoding import force_unicode
+try:
+    from django.utils.encoding import force_unicode
+except ImportError:
+    from django.utils.encoding import force_text as force_unicode
 from django.forms.util import ErrorList
     
 class NoAsteriskTextErrorList(ErrorList):
