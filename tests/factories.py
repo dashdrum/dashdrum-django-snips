@@ -1,4 +1,6 @@
 
+
+from __future__ import unicode_literals
 import random
 import string
 
@@ -8,7 +10,7 @@ from .models  import Author
 
 
 def random_string(length=10):
-    return u''.join(random.choice(string.ascii_letters) for x in range(length))
+    return ''.join(random.choice(string.ascii_letters) for x in range(length))
 
 
 class AuthorFactory(factory.DjangoModelFactory):

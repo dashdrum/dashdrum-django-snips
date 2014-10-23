@@ -8,7 +8,7 @@ widgets.py
 
 ##====================================================================================##
 
-
+from __future__ import unicode_literals
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.utils.safestring import mark_safe
 from django.conf import settings
@@ -67,10 +67,10 @@ class CustomRelatedFieldWidgetWrapper(RelatedFieldWidgetWrapper):
         self.widget.choices = self.choices
         output = [self.widget.render(name, value, *args, **kwargs)]
         if self.permission:
-            output.append(u'<a href="%s" class="add-another" id="add_id_%s" onclick="return showAddAnotherPopup(this);"> ' % \
+            output.append('<a href="%s" class="add-another" id="add_id_%s" onclick="return showAddAnotherPopup(this);"> ' % \
                 (self.add_url, name))
-            output.append(u'<img src="%simg/admin/icon_addlink.gif" width="10" height="10" alt="%s"/></a>' % (settings.ADMIN_MEDIA_PREFIX, _('Add Another')))
-        return mark_safe(u''.join(output))
+            output.append('<img src="%simg/admin/icon_addlink.gif" width="10" height="10" alt="%s"/></a>' % (settings.ADMIN_MEDIA_PREFIX, _('Add Another')))
+        return mark_safe(''.join(output))
 
 ##====================================================================================##
 
@@ -114,21 +114,21 @@ class SelectDisabled(Select):
     def render(self, name, value, attrs=None, choices=()):
         if value is None: value = ''
         final_attrs = self.build_attrs(attrs, name=name)
-        output = [u'<select%s>' % flatatt(final_attrs)]
+        output = ['<select%s>' % flatatt(final_attrs)]
         options = self.render_options(choices, [value], self.disabled)
         if options:
             output.append(options)
         output.append('</select>')
-        return mark_safe(u'\n'.join(output))
+        return mark_safe('\n'.join(output))
 
     def render_options(self, choices, selected_choices, disabled_choices):
         def render_option(option_value, option_label):
             option_value = force_unicode(option_value)
             ## This next line adds a mesasge after the label for the option.  Modify as needed ##
             option_label = (option_value in disabled_choices) and (force_unicode(option_label) + ' - SOLD OUT') or force_unicode(option_label)
-            selected_html = (option_value in selected_choices) and u' selected="selected"' or ''
-            disabled_html = (option_value in disabled_choices) and u' disabled="disabled"' or ''
-            return u'<option value="%s"%s%s>%s</option>' % (
+            selected_html = (option_value in selected_choices) and ' selected="selected"' or ''
+            disabled_html = (option_value in disabled_choices) and ' disabled="disabled"' or ''
+            return '<option value="%s"%s%s>%s</option>' % (
                 escape(option_value), selected_html, disabled_html,
                 conditional_escape(option_label))
         # Normalize to strings.
@@ -137,13 +137,13 @@ class SelectDisabled(Select):
         output = []
         for option_value, option_label in chain(self.choices, choices):
             if isinstance(option_label, (list, tuple)):
-                output.append(u'<optgroup label="%s">' % escape(force_unicode(option_value)))
+                output.append('<optgroup label="%s">' % escape(force_unicode(option_value)))
                 for option in option_label:
                     output.append(render_option(*option))
-                output.append(u'</optgroup>')
+                output.append('</optgroup>')
             else:
                 output.append(render_option(option_value, option_label))
-        return u'\n'.join(output)
+        return '\n'.join(output)
 
 
 ##====================================================================================##

@@ -3,6 +3,7 @@ Created on Sep 1, 2010
 
 @author: dgentry
 '''
+from __future__ import unicode_literals
 
 def truncate_to_space(orig,max):
     """

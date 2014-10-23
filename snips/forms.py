@@ -8,6 +8,8 @@ forms.py
 
 ##---------------------------------------------------------------------------##
 
+
+from __future__ import unicode_literals
 try:
     from django.utils.encoding import force_unicode
 except ImportError:
@@ -22,8 +24,8 @@ class NoAsteriskTextErrorList(ErrorList):
         return self.as_text()
 
     def as_text(self):
-        if not self: return u''
-        return u'\n'.join([u' %s' % force_unicode(e) for e in self])
+        if not self: return ''
+        return u'\n'.join([' %s' % force_unicode(e) for e in self])
     
 ##---------------------------------------------------------------------------##
 

@@ -36,6 +36,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTI
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS WITH THE SOFTWARE.
 
 """
+
+from __future__ import unicode_literals
 try:
     from django.utils.timezone import now
 except ImportError:
@@ -66,23 +68,23 @@ class TestEmptyChoiceField(TestCase):
 
     def test_no_choices(self):
         test_field = EmptyChoiceField(required=False)
-        self.assertEqual(test_field.choices,[(u'',u"---------"),])
+        self.assertEqual(test_field.choices,[('',"---------"),])
 
     def test_with_choices(self):
         test_field = EmptyChoiceField(choices=Author.objects.all(),required=False,initial=self.a1.pk)
-        self.assertEqual(test_field.choices,[(u'',u"---------"),self.a1,self.a2])
+        self.assertEqual(test_field.choices,[('',"---------"),self.a1,self.a2])
 
     def test_required_initial(self):
         test_field = EmptyChoiceField(choices=Author.objects.all(),required=True,initial=self.a1.pk)
-        self.assertNotEqual(test_field.choices[0],(u'',u"---------"))
+        self.assertNotEqual(test_field.choices[0],('',"---------"))
 
     def test_required_no_initial(self):
         test_field = EmptyChoiceField(choices=Author.objects.all(),required=True)
-        self.assertEqual(test_field.choices[0],(u'',u"---------"))
+        self.assertEqual(test_field.choices[0],('',"---------"))
 
     def test_custom_label(self):
-        test_field = EmptyChoiceField(choices=Author.objects.all(),empty_label=u'** None **',required=False)
-        self.assertEqual(test_field.choices[0],(u'',u"** None **"))
+        test_field = EmptyChoiceField(choices=Author.objects.all(),empty_label='** None **',required=False)
+        self.assertEqual(test_field.choices[0],('',"** None **"))
     
 ##---------------------------------------------------------------------------##
 ## Test forms.CustomErrorClassFormMixin

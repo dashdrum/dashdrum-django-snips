@@ -8,14 +8,14 @@ fields.py
 
 ##---------------------------------------------------------------------------##
 
-
+from __future__ import unicode_literals
 from django.forms import ChoiceField
 
 ''' Based on https://gist.github.com/davidbgk/651080 
     modified to mirror the functionality of ModelChoiceField '''
  
 class EmptyChoiceField(ChoiceField):
-    def __init__(self, choices=(), empty_label=u"---------", required=True, widget=None, label=None,
+    def __init__(self, choices=(), empty_label="---------", required=True, widget=None, label=None,
                  initial=None, help_text=None, *args, **kwargs):
  
         # prepend an empty label unless the field is required AND
