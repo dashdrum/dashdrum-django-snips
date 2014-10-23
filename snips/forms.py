@@ -25,7 +25,7 @@ class NoAsteriskTextErrorList(ErrorList):
 
     def as_text(self):
         if not self: return ''
-        return u'\n'.join([' %s' % force_unicode(e) for e in self])
+        return '\n'.join([' %s' % force_unicode(e) for e in self])
     
 ##---------------------------------------------------------------------------##
 

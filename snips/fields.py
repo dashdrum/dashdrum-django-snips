@@ -24,7 +24,7 @@ class EmptyChoiceField(ChoiceField):
         if required and (initial is not None):
             pass # don't prepend the empty label
         else:
-            choices = tuple([(u'', empty_label)] + list(choices))
+            choices = tuple([('', empty_label)] + list(choices))
  
         super(EmptyChoiceField, self).__init__(choices=choices, required=required, widget=widget, label=label,
                                         initial=initial, help_text=help_text, *args, **kwargs)
