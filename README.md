@@ -18,11 +18,11 @@ Based on [https://gist.github.com/davidbgk/651080](https://gist.github.com/david
 Usage:
 
     in forms.py:
-    
+
     class MyFormName(Form):
-        
+
         suitability = EmptyChoiceField(required=False,choices=Suitability)
-        
+
 See this link for a full write-up with example:
     [http://dashdrum.com/blog/2013/02/django-emptychoicefield/](http://dashdrum.com/blog/2013/02/django-emptychoicefield/)
 
@@ -35,29 +35,29 @@ This little mixin provides an easy way to declare a custom ErrorClass for a form
 Usage:
 
 	in forms.py:
-	
+
 	class MyFormName(CustomErrorClassFormMixin, ModelForm)
-	
+
 		error_class = MyCustomErrorListClass
-	
+
 Notes:
 
 * The mixin must be declared before the form class in order to update the error_class in kwargs before the form's __init__() method fires
-* The `error_class` attribute must be defined 
+* The `error_class` attribute must be defined
 * See NoAsteriskTextErrorList as an example of a custom ErrorList
 
 
 ### NoAsteriskTextErrorList
 
-A simple example of defining a custom ErrorList, this class changes the default rendering example to the as_text() method, 
-and that method is slightly modified from the stock behavior to not include an asterisk before each error. 
+A simple example of defining a custom ErrorList, this class changes the default rendering example to the as_text() method,
+and that method is slightly modified from the stock behavior to not include an asterisk before each error.
 
 Usage:
 
 	in views.py
-	
+
 	form = MyFormName(data=form_data, error_class=NoAsteriskTextErrorList)
-	
+
 Or try the CustomErrorClassFormMixin or CustomErrorClassViewMixin
 
 ## models.py
@@ -72,16 +72,16 @@ ModelBase extends the Model class and provides a couple of features I like to se
 Usage:
 
     in models.py
-    
+
     class MyModel(ModelBase):
         # define fields - created_on and updated_on are already defined
-        
+
         @property
         def allow_delete(self):
         	if # some condition #:
         		return False
         	return True
-        	
+
 An example of a condition that could be used in the `allow_delete` function would be to check to see if there are any linked objects.
 
     if len(MyModel.objects.get(id=self.id).anothermodel_set.all()) == 0:  ## Check for linked objects
@@ -97,7 +97,7 @@ Truncates the given string to the desired length at the nearest available space.
 Usage:
 
     short_name = truncate_to_space(full_name,10)
-    
+
 ### is_valid_email(email)
 
 Uses the Django provided regular expression to validate an email address.
@@ -116,7 +116,7 @@ A metaclass that makes for simple ModelField choices
 Usage:
 
     in models.py (or wherever you wish):
-    
+
     class ActionType(Choice):
         AWAITING_APPROVAL = 'E'
         APPROVED = 'A'
@@ -124,12 +124,12 @@ Usage:
         IN_PROCESS = 'I'
         TO_COMMITTEE = 'C'
         NEEDS_RESEARCH = 'N'
-        
+
     in forms.py:
-    
+
     class MyFormName(Form):
-        
-        action_type = ChoiceField(required=False,choices=ActionType)	    
+
+        action_type = ChoiceField(required=False,choices=ActionType)
 
 ## views.py
 
@@ -145,10 +145,36 @@ value in the `get_form_kwargs` method.
         class MyViewName(CustomErrorClassViewMixin, [a FormMixin descendant, such as CreateView])
 
             error_class = MyCustomErrorListClass
-	
+
 Note:
 * The `error_class` attribute must be defined
 * See NoAsteriskTextErrorList as an example of a custom ErrorList
+
+### OneToOneCreateMixin, OneToOneUpdateMixin, OneToOneDeleteMixin
+
+Set of mixins to add a 2nd model with a one-to-one relationship to class based views
+
+Additional instance varaibles hold the information for the 2nd model:
+
+other_model - *required*
+other_form_class
+other_queryset
+other_object
+other_fields
+
+Usage:
+
+Use these three mixins with their corresponding class-based view.  Define the additional instance variables as needed.
+
+Example:
+
+    class MyUpdateView(OneToOneUpdateMixin, UpdateView):
+
+        model=MyModel
+        form_class = MyForm
+
+        other_model=MyOtherModel
+        other_form_class = MyOtherForm
 
 ### FormsetMixin, FormsetCreateMixin, FormsetUpdateMixin
 
@@ -159,7 +185,7 @@ FormsetMixin is the parent class that provides most of the functionality. Howeve
 FormsetCreateMixin and FormsetUpdateMixin both handle the assignment of self.object as is appropriate for their function.
 
 Usage:
-  
+
 Use FormsetCreateMixin and FormsetUpdateMixin along with the corresponding class-based view.  Also, the instance variable detail\_form\_class should be defined.
 
 Example:
@@ -168,7 +194,7 @@ Example:
         model = MyModel
         form_class = MyModelForm
         detail_form_class = MyFormest
-    
+
 ## widgets.py
 
 ### CustomRelatedFieldWidgetWrapper
@@ -178,32 +204,32 @@ Based on RelatedFieldWidgetWrapper, this version does the same thing outside of 
 See this link for a full write-up with example:
 
    [http://dashdrum.com/blog/2012/12/more-relatedfieldwidgetwrapper-the-popup/ ](http://dashdrum.com/blog/2012/12/more-relatedfieldwidgetwrapper-the-popup/ )
-   
+
 
 ### SelectDisabled
 
 Adds the ability to disable selected choices of a Select control
-        
+
 Usage:
-        
+
     in forms.py:
-        
-    class MyForm(Form): 
+
+    class MyForm(Form):
         def __init__(self, disabled, *args, **kwargs):
             super(MyForm, self).__init__(*args, **kwargs)
             if disabled:
                 self.fields['my_field'].widget.disabled = disabled
-                    
-        my_field = ModelChoiceField(widget=SelectDisabled(),queryset=MyModel.objects.all(),empty_label=None)  
-            
+
+        my_field = ModelChoiceField(widget=SelectDisabled(),queryset=MyModel.objects.all(),empty_label=None)
+
     in views.py:
-        
-        ## Set a condition in the filter clause of the query to return 
+
+        ## Set a condition in the filter clause of the query to return
         ## the disabled items
-        
+
         disabled = []
         for m in MyModel.objects.filter(##condition##).values_list('id'):
             disabled.append(m[0])
-                
+
         form = MyForm( data=request.POST or None, disabled=disabled)
 
