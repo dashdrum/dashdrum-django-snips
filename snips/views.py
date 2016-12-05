@@ -43,6 +43,10 @@ class CustomErrorClassViewMixin(object):
 
 #-----------------------------------------------------------------------------#
 
+
+from django.http import HttpResponseRedirect
+from django.core.exceptions import ImproperlyConfigured
+
 class DoubleObjectMixin(object):
 
     def get_other_object(self, other_queryset=None):
