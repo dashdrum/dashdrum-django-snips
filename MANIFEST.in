@@ -1,4 +1,1 @@
-include AUTHORS CHANGES README INSTALL LICENCE
-recursive-include templates *.py *.html *.js
-include docs/Makefile
-recursive-include docs/source *
+recursive-include no_password/templates *
