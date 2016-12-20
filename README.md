@@ -233,3 +233,14 @@ Usage:
 
         form = MyForm( data=request.POST or None, disabled=disabled)
 
+## no_password app
+
+Based on code from a docs page of django-authtools, this app will mod the user forms in Admin to not ask for a password. This would be used when authentication is expected to come from outside, such as LDAP or SAML.
+
+   [http://django-authtools.readthedocs.io/en/latest/how-to/invitation-email.html](http://django-authtools.readthedocs.io/en/latest/how-to/invitation-email.html)
+
+Usage:
+
+    include 'snips.no_password', in the list of INSTALLED_APPS
+
+Note that the createsuperuser management command is not affected by this app, and the administrator can still create a local superuser account with a password.
