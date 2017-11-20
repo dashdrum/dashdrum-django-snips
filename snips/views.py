@@ -276,3 +276,44 @@ class OneToOneDeleteMixin(DoubleObjectMixin):
         self.object = None
         self.other_object = self.get_other_object()
         return super(OneToOneDeleteMixin,self).get(request, *args, **kwargs)
+
+#-----------------------------------------------------------------------------#
+
+# PaginatorFive - adds methods to Paginator and Page for next and previous five pages
+
+from django.core.paginator import Page, Paginator
+
+class PageFive(Page):
+
+    '''
+        Include info for next 5 and previous 5 pages
+    '''
+
+    def has_next_five(self):
+        return self.number < self.paginator.num_pages - 5
+
+    def has_previous_five(self):
+        return self.number > 6
+
+    def next_five_page_number(self):
+        return self.paginator.validate_number(self.number + 5)
+
+    def previous_five_page_number(self):
+        return self.paginator.validate_number(self.number - 5)
+
+class PaginatorFive(Paginator):
+
+    '''
+        Uses the PageFive class to report info for next and
+        previous 5 pages
+
+        Set pageinator_class in ListView to use
+    '''
+
+    def _get_page(self, *args, **kwargs):
+        """
+        Return an instance of a single page using the PageFive object
+        """
+        return PageFive(*args, **kwargs)
+
+

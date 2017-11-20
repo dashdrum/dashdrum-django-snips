@@ -1,0 +1,72 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>{% block title %}{% endblock title %}</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+{% block css %}
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+	{% block css_shared %}
+
+		<!-- Application CSS -->
+		<!-- <link rel="stylesheet" href="{% static '???.css'%}"> -->
+
+	{% endblock css_shared %}
+	{% block css_custom %}{% endblock css_custom %}
+{% endblock css %}
+
+{% block js %}
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    {% block js.shared %}{% endblock js.shared %}
+    {% block js.custom %}{% endblock js.custom %}
+{% endblock js%}
+
+{% block extra_head %}{% endblock extra_head %}
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+	<div class="container" id="reg-navbar">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#app-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			{% block contentheader %}{% endblock contentheader %}
+			<!-- Brand -->
+		</div><!-- /.navbar-header -->
+		<div class="navbar-collapse collapse" id="app-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<!-- nav items here as <li> -->
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container -->
+</div><!-- /.navbar -->
+
+<div class="container">
+	<div id="content" >{% block content %}{% endblock content %}</div>
+	<div id="contentfooter">{% block contentfooter %}{% endblock contentfooter %}</div>
+</div>
+
+{% block end_scripts %}{% endblock end_scripts %}   
+
+</body>
+</html>
